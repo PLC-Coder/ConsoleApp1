@@ -1,20 +1,42 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Threading;
 
 namespace ConsoleApp1
 {
-     class Program
-     {
-          static void Main(string[] args)
-          {
+    class Program
+    {
+        static void Main(string[] args)
+        {
             int num1 = -2;
             uint num2 = 10;
             int num3;
             char[] charArr = new char[10];
             char loopChar = 'A';
+            int numString = Convert.ToInt32("45");
 
-               Console.WriteLine("Hello World! " + (num1 + num2));
+            Console.WriteLine("32" + "16");
+            Console.WriteLine("32" + "16" + numString);
+            Console.WriteLine(Convert.ToInt32("32") + numString);
+
+            Debug.WriteLine("Hello World From Debug!");
+            Console.WriteLine("Hello World! " + (num1 + num2));
             num3 = num1 + (int)num2;
             Console.WriteLine(num3);
+
+            string stripString = "ABC123DEF";
+            string strippedString;
+
+            strippedString = stripString.Substring(3, 3);
+
+            Console.WriteLine("StrippedString is: " + strippedString);
+            Console.WriteLine("strippedString + 45: " + (Convert.ToInt32(strippedString) + 45));
+            Console.WriteLine(10.15);
+
+            string[] friends;
+            friends = new string[5];
+
+            string[] ladies = { "Jamie", "Kelly", "May", "Rebecca", "Victoria"};
 
             for (int i = 0; i < charArr.Length; i++)
             {
@@ -78,6 +100,123 @@ namespace ConsoleApp1
 
             Console.WriteLine();
 
+        
+             // Array of Station completion status.  For Readability purposes, index 0 is not used in the program
+             Station[] Sta = new Station[10];
+
+            // Some boolean logic - such as working with PLC's
+            // First will initialize a custom struct for station variables
+            // Please note that Station 0 is not used, but is still initialized
+            for (int i = 0; i < Sta.Length; i++)
+            {
+                Sta[i].CmpltFlag = false;
+                Sta[i].PartPresent = false;
+                Sta[i].PartFailed = true;
+                Sta[i].Homed = false;
+                Sta[i].OpInProgress = false;
+                Sta[i].StaName = "Station " + i;
+                Sta[i].PrtType = PartType.ELECTRICAL;
+                Sta[i].PrtVersion = PartVersion.BOTH;
+
+            }
+
+            // Display the current status of each station from 1 to 4
+            // Use a half second delay between results to give the reader enough time to view the information
+            for (int i = 0; i < Sta.Length; i++)
+            {
+                if (i <= 0 || i >= 5)
+                    continue;
+
+                Console.WriteLine(Sta[i].StaName + " Complete Flag: " + Sta[i].CmpltFlag);
+                System.Threading.Thread.Sleep(500);
+                Console.WriteLine(Sta[i].StaName + " Part Present: " + Sta[i].PartPresent);
+                System.Threading.Thread.Sleep(500);
+                Console.WriteLine(Sta[i].StaName + " Part Type: " + Sta[i].PrtType);
+                System.Threading.Thread.Sleep(500);
+                Console.WriteLine(Sta[i].StaName + " Part Version: " + Sta[i].PrtVersion);
+                System.Threading.Thread.Sleep(500);
+                Console.WriteLine();
+            }
+
+            // Conditions to Start Station
+            if (Sta[1].PartPresent && Sta[1].Homed)
+                Sta[1].OpInProgress = true;
+                Sta[1].CmpltFlag = false;
+
+            // Station Complete
+            if (Sta[1].CmpltFlag && Sta[1].Homed)
+                Sta[1].OpInProgress = false;
+
+            //Using an ENUM in a switch statement
+            switch (Sta[1].PrtVersion)
+            {
+                case PartVersion.LH:
+                    Console.WriteLine("LH");
+                    break;
+                case PartVersion.RH:
+                    Console.WriteLine("RH");
+                    break;
+                case PartVersion.BOTH:
+                    Console.WriteLine("BOTH");
+                    break;
+                default:
+                    Console.WriteLine("NO PART VERSION");
+                    break;
+            }
+
         }
-     }
+        
+        enum PartType // PartTypes
+        {
+            ELECTRICAL,
+            ELECTRONIC,
+            MECHANICAL
+        }
+
+        enum PartVersion // PartVersions
+        {
+            LH,
+            RH,
+            BOTH
+        }
+
+        // STATION STATUS
+        /// <summary>
+        /// Struct of Station Status Flags and Part Status Flags.
+        /// </summary>
+        /// <returns>
+        /// None.
+        /// </returns>
+        struct Station
+        {
+            public bool CmpltFlag;
+            public bool PartPresent;
+            public bool PartFailed;
+            public bool Homed;
+            public bool OpInProgress;
+
+            public string StaName;
+            public string OperationDescription;
+
+            public PartType PrtType;
+            public PartVersion PrtVersion;
+        }
+        /// <summary>
+        /// Takes the age and name of a person as arguments and prints out to the console
+        /// </summary>
+        /// <param name="age"></param>
+        /// <param name="name"></param>
+        /// <returns>int Success of Function = 0</returns>
+        static int PrintAgeName(int age, string name)
+        {
+            Console.WriteLine("Your age is: " + age);
+            Console.WriteLine("Your name is: " + name);
+            return 0;
+        }
+    }
+    class SafetyBlock
+    {
+          
+    }
 }
+
