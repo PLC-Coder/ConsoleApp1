@@ -1,6 +1,8 @@
 ﻿using System;
+using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Threading;
+using System.Transactions;
 
 namespace ConsoleApp1
 {
@@ -128,13 +130,13 @@ namespace ConsoleApp1
                     continue;
 
                 Console.WriteLine(Sta[i].StaName + " Complete Flag: " + Sta[i].CmpltFlag);
-                System.Threading.Thread.Sleep(500);
+                // System.Threading.Thread.Sleep(500);
                 Console.WriteLine(Sta[i].StaName + " Part Present: " + Sta[i].PartPresent);
-                System.Threading.Thread.Sleep(500);
+                // System.Threading.Thread.Sleep(500);
                 Console.WriteLine(Sta[i].StaName + " Part Type: " + Sta[i].PrtType);
-                System.Threading.Thread.Sleep(500);
+                // System.Threading.Thread.Sleep(500);
                 Console.WriteLine(Sta[i].StaName + " Part Version: " + Sta[i].PrtVersion);
-                System.Threading.Thread.Sleep(500);
+                // System.Threading.Thread.Sleep(500);
                 Console.WriteLine();
             }
 
@@ -164,6 +166,49 @@ namespace ConsoleApp1
                     break;
             }
 
+            //Some Math Functions
+            Console.WriteLine("The greater number of 10 and 15 is: " + Math.Max(10, 15));
+            Console.WriteLine("The square root of 144 is: " + Math.Sqrt(144));
+            Console.WriteLine("2 raised to the Power of 3 is: " + Math.Pow(2, 3));
+
+            //Working with passing arguments by reference to methods and functions
+            int hoursWorked = 0;
+            int methodStatus;
+            methodStatus = PrintAgeName(30, "John", ref hoursWorked);
+            methodStatus = PrintAgeName(30, "John", ref hoursWorked);
+            methodStatus = PrintAgeName(30, "John", ref hoursWorked);
+            Console.WriteLine("Method Status of PrintAgeName is: " + methodStatus);
+            Console.WriteLine();
+
+            // GUESSING GAME ////////////////////////////////////////////////////////////
+            string secretWord = "Great";
+            string guess = "";
+            int numGuesses = 5;
+            bool outOfGuesses = false;
+
+            while (guess != secretWord && numGuesses > 0)
+            {
+                Console.WriteLine("Let's play a guessing game.");
+                Console.WriteLine(numGuesses + " tries are remaining...");
+                Console.Write("Enter a word: ");
+                guess = Console.ReadLine();
+                if (guess != secretWord)
+                {
+                    Console.WriteLine("Incorrect word, please try again.");
+                }
+                numGuesses--;
+                Console.WriteLine();
+                if (numGuesses == 0) { outOfGuesses = true; }
+            }
+
+            if (!outOfGuesses) { Console.WriteLine("Congratulations, you win!"); }
+            else { Console.WriteLine("You are not very good at guessing.  You loose!"); }
+            // END GUESSING GAME /////////////////////////////////////////////////////////////////////////////
+
+            Console.WriteLine(numGuesses++);
+            Console.WriteLine(numGuesses);
+
+            Console.WriteLine(GetPow(2, 3));
         }
         
         enum PartType // PartTypes
@@ -206,17 +251,24 @@ namespace ConsoleApp1
         /// </summary>
         /// <param name="age"></param>
         /// <param name="name"></param>
+        /// <param name="hoursWorked"></param>
         /// <returns>int Success of Function = 0</returns>
-        static int PrintAgeName(int age, string name)
+        static int PrintAgeName(int age, string name, ref int hoursWorked)
         {
             Console.WriteLine("Your age is: " + age);
             Console.WriteLine("Your name is: " + name);
+            Console.WriteLine("Hours Worked: " + (hoursWorked += 40));
             return 0;
+        }
+
+        static double GetPow(double baseNum, double powNum)
+        {
+            return Math.Pow(baseNum, powNum);
         }
     }
     class SafetyBlock
     {
-          
+             
     }
 }
 
