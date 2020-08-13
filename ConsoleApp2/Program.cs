@@ -1,10 +1,12 @@
 ﻿using System;
-using System.ComponentModel.Design;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Diagnostics;
-using System.Threading;
-using System.Transactions;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
-namespace ConsoleApp1
+namespace ConsoleApp2
 {
     class Program
     {
@@ -38,7 +40,7 @@ namespace ConsoleApp1
             string[] friends;
             friends = new string[5];
 
-            string[] ladies = { "Jamie", "Kelly", "May", "Rebecca", "Victoria"};
+            string[] ladies = { "Jamie", "Kelly", "May", "Rebecca", "Victoria" };
 
             for (int i = 0; i < charArr.Length; i++)
             {
@@ -102,9 +104,8 @@ namespace ConsoleApp1
 
             Console.WriteLine();
 
-        
-             // Array of Station completion status.  For Readability purposes, index 0 is not used in the program
-             Station[] Sta = new Station[10];
+            // Array of Station completion status.  For Readability purposes, index 0 is not used in the program
+            Station[] Sta = new Station[10];
 
             // Some boolean logic - such as working with PLC's
             // First will initialize a custom struct for station variables
@@ -143,7 +144,7 @@ namespace ConsoleApp1
             // Conditions to Start Station
             if (Sta[1].PartPresent && Sta[1].Homed)
                 Sta[1].OpInProgress = true;
-                Sta[1].CmpltFlag = false;
+            Sta[1].CmpltFlag = false;
 
             // Station Complete
             if (Sta[1].CmpltFlag && Sta[1].Homed)
@@ -209,8 +210,60 @@ namespace ConsoleApp1
             Console.WriteLine(numGuesses);
 
             Console.WriteLine(GetPow(2, 3));
+
+            // Some multidimensional arrays
+            int[,,,,,,,] crazy8DimArray = new int[5, 5, 5, 5, 5, 5, 5, 5]; // 8 Dimension Array!
+
+            crazy8DimArray[0, 1, 4, 3, 3, 1, 0, 1] = 12;
+
+            Console.WriteLine("crazy8DimArray[0,0,0,0,0,0,0,0] is: " + crazy8DimArray[0, 0, 0, 0, 0, 0, 0, 0]);
+            Console.WriteLine("crazy8DimArray[0,1,4,3,3,1,0,1] is: " + crazy8DimArray[0, 1, 4, 3, 3, 1, 0, 1]);
+
+            // 2 Dimensional multidimensional arrays (2,2)
+            int[,] crazy2DimArray = { { 1, 2 }, { 3, 4 } };
+
+            // 3 Dimensional multidimensional arrays {3,3,3) (Count the row first, then the column, then the final column)
+            int[,,] crazy3dimArray = { {{ 1, 2, 3}, { 4, 5, 6}, { 7, 8, 9 } },
+                                        { {1, 1, 1 }, {2, 2, 2 }, {3, 3, 3 } },
+                                        { {1, 1, 1 }, {2, 2, 2 }, {3, 3, 3 } } };
+
+            Console.WriteLine(crazy3dimArray[0, 1, 2]); // Should be 6
+
+            //Lets move on to 4-Dim Array! {2,2,2,2} (Count the row first, then the next row, then the column, then the final column)
+            int[,,,] crazy4DimArray = { {{{ 1, 2 }, { 3, 4 } }, //First set
+                                        {{5, 6 }, {7, 8 } } },
+
+                                        {{{ 9, 10 }, { 11, 12 } }, //Second set
+                                        {{13, 14 }, {15, 16 } } } };
+
+            Console.WriteLine(crazy4DimArray[1, 0, 1, 1]); // Should be 12
+
+            //Is your MIND BLOWN YET?  Mine is A little bit, but not really...
+            //Lets try for the 5-Dim Array!!!
+            //Psych!  I'm too tired and lazy to do this right now... Moving on to other subjects...
+
+
+            // Exception Handling
+            try
+            {
+                Console.Write("Enter a number: ");
+                int num11 = Convert.ToInt32(Console.ReadLine());
+                Console.Write("Enter another number: ");
+                int num12 = Convert.ToInt32(Console.ReadLine());
+
+                Console.WriteLine(num11 / num12);
+
+                Console.ReadLine();
+            }
+            catch (System.DivideByZeroException ex)
+            {
+                MessageBox.Show("Cannot Divide By Zero!", "Math Error");
+            }
+
+            Console.WriteLine("Program Continues Past Math Error!");
+
         }
-        
+
         enum PartType // PartTypes
         {
             ELECTRICAL,
@@ -268,7 +321,6 @@ namespace ConsoleApp1
     }
     class SafetyBlock
     {
-             
+
     }
 }
-
