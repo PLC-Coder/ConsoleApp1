@@ -18,6 +18,8 @@ namespace ConsoleApp2
             char[] charArr = new char[10];
             char loopChar = 'A';
             int numString = Convert.ToInt32("45");
+            int num11 = 0;
+            int num12 = 0;
 
             Console.WriteLine("32" + "16");
             Console.WriteLine("32" + "16" + numString);
@@ -237,6 +239,7 @@ namespace ConsoleApp2
                                         {{13, 14 }, {15, 16 } } } };
 
             Console.WriteLine(crazy4DimArray[1, 0, 1, 1]); // Should be 12
+            Console.WriteLine();
 
             //Is your MIND BLOWN YET?  Mine is A little bit, but not really...
             //Lets try for the 5-Dim Array!!!
@@ -247,20 +250,57 @@ namespace ConsoleApp2
             try
             {
                 Console.Write("Enter a number: ");
-                int num11 = Convert.ToInt32(Console.ReadLine());
+                num11 = Convert.ToInt32(Console.ReadLine());
                 Console.Write("Enter another number: ");
-                int num12 = Convert.ToInt32(Console.ReadLine());
+                num12 = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine();
 
-                Console.WriteLine(num11 / num12);
-
-                Console.ReadLine();
+                Console.WriteLine(num11 + " / " + num12 + " is: " + (num11 / num12));
+                Console.WriteLine();
             }
-            catch (System.DivideByZeroException ex)
+            
+            //catch (System.DivideByZeroException ex)
+            catch (DivideByZeroException ex)
             {
-                MessageBox.Show("Cannot Divide By Zero!", "Math Error");
+                Console.WriteLine("Exception 1: " + ex.Message);
+                Console.WriteLine("num11 is: " + num11);
+                Console.WriteLine("num12 is: " + num12);
+            }
+           
+            //catch (System.FormatException ex)
+            catch (System.FormatException ex)
+            {
+                Console.WriteLine("Exception 2: " + ex.Message);
+                Console.WriteLine("num11 is: " + num11);
+                Console.WriteLine("num12 is: " + num12);
+            }
+            
+            //catch (System.OverflowException ex)
+            catch (OverflowException ex)
+            {
+                Console.WriteLine("Exception 3: " + ex.Message);
+                Console.WriteLine("num11 is: " + num11);
+                Console.WriteLine("num12 is: " + num12);
             }
 
-            Console.WriteLine("Program Continues Past Math Error!");
+            finally // finally is optional
+            {
+                // Print values of num11 and num12
+                Console.WriteLine("num11 is: " + num11);
+                Console.WriteLine("num12 is: " + num12);
+                Console.WriteLine();
+                
+                // rest num11 and num12 to 0
+                num11 = 0;
+                num12 = 0;
+
+                // Verify set back to 0
+                Console.WriteLine("After resetting, num11 is: " + num11);
+                Console.WriteLine("After resetting, num12 is: " + num12);
+                Console.WriteLine();
+            }
+
+            Console.WriteLine("Program Continues Past Division!");
 
         }
 
